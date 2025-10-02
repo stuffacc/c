@@ -14,7 +14,6 @@ void main() {
     printf("Введите n: ");
     scanf("%d", &n);
 
-
     int size = n + m;
     int array[size];
     // заполнить array
@@ -22,28 +21,29 @@ void main() {
         array[i] = i;
     }
 
-printf("Исходный: ");
-print_array(size, array);
+    printf("Исходный: ");
+    print_array(size, array);
 
     for (int j = 0; j < m; j++) {
-	for (int i = 1; i < size; i++) {
-		int current = array[i - 1];
-		int next = array[i];
+        for (int i = 1; i < size; i++) {
+	    int current = array[i - 1];
+            int next = array[i];
 
-
-		array[i - 1] = next;
-		array[i] = current;
-
-
-		}
+            array[i - 1] = next;
+            array[i] = current;
 	}
-printf("Конечный: ");
-print_array(size, array);
+    }
+
+    printf("Конечный: ");
+    print_array(size, array);
+
 }
 
+
+
 void print_array(int size, int array[]) {
-	for (int i = 0; i < size; i++) {
-        	printf("%d ", array[i]);
-    	}
-	printf("\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
 }
