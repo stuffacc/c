@@ -10,12 +10,11 @@ void main() {
 	init(&stack);
 	fgets(string, sizeof(string), stdin);
 	
+	int countSpace = 0;
+	
 	for (int i = 0; i < 200; i++) {
 	        char cur = string[i];
-	        if (cur == ' ') {
-	                continue;
-	        }
-	        else if (cur == '\n') {
+	        if (cur == '\n') {
 	                break;  
 	        }
 	        
@@ -31,7 +30,7 @@ void main() {
 	                                break;
 	                        }
 	                        
-	                        printf("%c ", value);
+	                        printf(" %c", value);
 	                }
 	        }
 	        else if (cur == '+' || cur == '-' || cur == '*' || cur == '/') {
@@ -42,7 +41,7 @@ void main() {
 	                        
 	                        int valuePriority = getPriority(value);
 	                        if (valuePriority >= curPriority) {
-	                                printf("%c ", value);
+	                                printf(" %c", value);
 	                        }
 	                        else {
 	                                push(&stack, value);
@@ -54,7 +53,16 @@ void main() {
 	        }
 	        
 	        else {
-	                printf("%c ", cur);
+	                if (cur == ' ' && countSpace == 0) {
+	                        printf("%c", cur);
+	                        countSpace += 1;
+	                }
+	                else if (cur != ' ') {
+	                        printf("%c", cur);
+	                        countSpace = 0;
+	                }
+	                
+	                
 	        }
 	        
 	}
@@ -67,7 +75,7 @@ void main() {
 	                break;
 	        }
 	                        
-	        printf("%c ", value);
+	        printf(" %c", value);
 	}
 	
 	printf("\n");
