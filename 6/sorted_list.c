@@ -88,7 +88,8 @@ void removeValue(List* list, int value) {
                         free(head);
                         (*list).size--;
                         
-                        return;
+                        head = (*list).head;
+                        continue;
                 }
                 
                 buff = head;
