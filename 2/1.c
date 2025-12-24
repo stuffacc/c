@@ -11,4 +11,3 @@ void main()
     int res2 = (x2 + x) * (x2 + 1) + 1;
     printf("%d\n", res2);
 }
-
