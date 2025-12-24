@@ -1,7 +1,8 @@
 #include<stdio.h>
 
 
-void main() {
+void main()
+{
 	int a = 5;
 	int b = 2;
 
@@ -33,5 +34,5 @@ void main() {
 
 
 	printf("Неполное частное: %d\n", k);
-    }
+	}
 }
