@@ -1,28 +1,28 @@
-#include<stdio.h>
+#include <stdio.h>
 
 void main() {
-    printf("Введите строку: ");
-    char ch = getchar();
-    int k = 0;
+  printf("Введите строку: ");
+  char string[256];
+  fgets(string, sizeof(string), stdin);
+  int k = 0;
 
-    
-    while (ch != '\n') {
-        if (ch == '(') {
-            k++;
-        }
-        else if (ch == ')') {
-            k--;
-        }
-        if (k < 0) {
-            break;
-        }
-        ch = getchar();
+  int index = 0;
+  while (string[index] != '\0') {
+    char ch = string[index];
+    if (ch == '(') {
+      k++;
+    } else if (ch == ')') {
+      k--;
     }
-    
-    if (k == 0) {
-        printf("Баланс есть\n");
+    if (k < 0) {
+      break;
     }
-    else {
-        printf("Баланс нарушен\n");
-    }
+    index++;
+  }
+
+  if (k == 0) {
+    printf("Баланс есть\n");
+  } else {
+    printf("Баланс нарушен\n");
+  }
 }
