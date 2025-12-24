@@ -1,16 +1,15 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node {
-	char value;
-	struct Node* next;
+    char value;
+    struct Node* next;
 } Node;
 
 typedef struct Stack {
-	Node* top;
-	int size;
+    Node* top;
+    int size;
 } Stack;
-
 
 void init(Stack* stack);
 void push(Stack* stack, char value);
