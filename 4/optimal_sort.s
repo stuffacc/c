@@ -11,14 +11,18 @@ sortArray:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$32, %rsp
+	subq	$48, %rsp
 	movl	%edi, -20(%rbp)
 	movl	%esi, -24(%rbp)
 	movq	%rdx, -32(%rbp)
+	movl	%ecx, -36(%rbp)
 	movl	-24(%rbp), %eax
 	subl	-20(%rbp), %eax
 	cmpl	$1, %eax
-	jle	.L13
+	jg	.L2
+	movl	$0, %eax
+	jmp	.L3
+.L2:
 	movl	-24(%rbp), %eax
 	cltq
 	salq	$2, %rax
@@ -94,6 +98,7 @@ sortArray:
 	movl	%eax, (%rdx)
 	addl	$1, -16(%rbp)
 	subl	$1, -12(%rbp)
+	addl	$2, -36(%rbp)
 .L11:
 	movl	-16(%rbp), %eax
 	cmpl	-12(%rbp), %eax
@@ -118,23 +123,24 @@ sortArray:
 	addq	%rax, %rdx
 	movl	-8(%rbp), %eax
 	movl	%eax, (%rdx)
+	addl	$2, -36(%rbp)
+	movl	-36(%rbp), %ecx
 	movq	-32(%rbp), %rdx
-	movl	-16(%rbp), %ecx
+	movl	-16(%rbp), %esi
 	movl	-20(%rbp), %eax
-	movl	%ecx, %esi
 	movl	%eax, %edi
 	call	sortArray
+	addl	%eax, -36(%rbp)
 	movl	-16(%rbp), %eax
-	leal	1(%rax), %ecx
+	leal	1(%rax), %edi
+	movl	-36(%rbp), %ecx
 	movq	-32(%rbp), %rdx
 	movl	-24(%rbp), %eax
 	movl	%eax, %esi
-	movl	%ecx, %edi
 	call	sortArray
-	jmp	.L1
-.L13:
-	nop
-.L1:
+	addl	%eax, -36(%rbp)
+	movl	-36(%rbp), %eax
+.L3:
 	leave
 	.cfi_def_cfa 7, 8
 	ret
