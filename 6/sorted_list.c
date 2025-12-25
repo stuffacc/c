@@ -1,109 +1,106 @@
 #include "sorted_list.h"
 
-
-void initList(List* list) {
-        (*list).head = NULL;
-        (*list).size = 0;
+void initList(List* list)
+{
+    (*list).head = NULL;
+    (*list).size = 0;
 }
 
-void addValue(List* list, int value) {
-        Node* head = (*list).head;
-        
-        if (head == NULL) {
-                Node* node = malloc(sizeof(Node));
-                (*node).next = NULL;
-                (*node).value = value;
-                
-                (*list).head = node;
-                (*list).size++;
-                return;
-        }
-        
-        
-        
-        int current = (*head).value;
-        Node* buff = NULL;
+Node* createNode(int value, Node* next)
+{
+    Node* node = malloc(sizeof(Node));
+    if (node == NULL) {
+        printf("Ошибка выделения памяти\n");
+        exit(-1);
+    }
 
+    (*node).next = next;
+    (*node).value = value;
 
-        while (current < value) {
-                if ((*head).next == NULL) {
-                        Node* node = malloc(sizeof(Node));
-                        (*node).next = NULL;
-                        (*node).value = value;
-                
-                        (*head).next = node;
-                        
-                        (*list).size++;
-                        return;
-                }
-        
-        
-                buff = head;
-                head = (*head).next;
-                
-                current = (*head).value;
-        }
-        
-        
-        Node* node = malloc(sizeof(Node));
-        (*node).next = head;
-        (*node).value = value;
-        
+    return node;
+}
+
+void addValue(List* list, int value)
+{
+    Node* head = (*list).head;
+
+    if (head == NULL) {
+        Node* node = createNode(value, NULL);
+
+        (*list).head = node;
         (*list).size++;
-        
-        if (buff != NULL) {
-                (*buff).next = node;
-        }
-        
-        else {
-                (*list).head = node;
-        }
-}
+        return;
+    }
 
+    Node* buff = NULL;
 
-void removeValue(List* list, int value) {
-        Node* head = (*list).head;
-
-        if (head == NULL) {
-                return;
-        }
-        
+    while (head->value < value) {
         if ((*head).next == NULL) {
-                
+            Node* node = createNode(value, NULL);
+
+            (*head).next = node;
+
+            (*list).size++;
+            return;
         }
-        
-        Node* buff = NULL;
-        
-        while (head != NULL) {
-                int listValue = (*head).value;
-                if (listValue == value) {
-                        if (buff != NULL) {
-                                (*buff).next = (*head).next;
-                        }
-                        
-                        else {
-                                (*list).head = (*head).next;
-                        }
-                        
-                        free(head);
-                        (*list).size--;
-                        
-                        head = (*list).head;
-                        continue;
-                }
-                
-                buff = head;
-                head = (*head).next;
-        }
+
+        buff = head;
+        head = (*head).next;
+    }
+
+    Node* node = createNode(value, head);
+
+    (*list).size++;
+
+    if (buff != NULL) {
+        (*buff).next = node;
+    }
+
+    else {
+        (*list).head = node;
+    }
 }
 
+void removeValue(List* list, int value)
+{
+    Node* iter = (*list).head;
 
-void printList(List* list) {
-        Node* head = (*list).head;
-        while (head != NULL) {
-                int value = (*head).value;
-                printf("%d ", value);
-                head = (*head).next;
+    if (iter == NULL) {
+        return;
+    }
+
+    Node* buff = NULL;
+
+    while (iter != NULL) {
+        int listValue = (*iter).value;
+        if (listValue == value) {
+            if (buff != NULL) {
+                (*buff).next = (*iter).next;
+            }
+
+            else {
+                (*list).head = (*iter).next;
+            }
+
+            free(iter);
+            (*list).size--;
+
+            iter = (*list).head;
+            continue;
         }
-        printf("\n");
+
+        buff = iter;
+        iter = (*iter).next;
+    }
+}
+
+void printList(List* list)
+{
+    Node* iter = (*list).head;
+    while (iter != NULL) {
+        int value = (*iter).value;
+        printf("%d ", value);
+        iter = (*iter).next;
+    }
+    printf("\n");
 }
