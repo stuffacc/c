@@ -1,7 +1,15 @@
-#include "sorted_list.h"
+#include "test/test_sorted_list.h"
 
-void main(int argc, char* argv[])
+#include <string.h>
+
+int main(int argc, char* argv[])
 {
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--test") == 0) {
+            int res = testRunAll();
+            return res;
+        }
+    }
     List list;
     initList(&list);
 
@@ -40,4 +48,6 @@ void main(int argc, char* argv[])
         }
         scanf("%c", &inp);
     }
+
+    return 0;
 }
